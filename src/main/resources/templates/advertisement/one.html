@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="${advertisement.shortDescription}">
+    </title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <script type="text/javascript" th:src="@{/js/ajax.js}"></script>
+    <style>
+        body {background: #f7f7f7;}
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-left" th:href="@{/dashboard}" title="Powrót do strony głównej">
+            <img itemprop="image" class="mobile" th:src="@{/img/m4chi.png}" alt="Motoryzacyjny portal ogłoszeniowy">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/advertisement/all}">Zarządzaj ogłoszeniami</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/advertisement/form}" style="">Dodaj ogłoszenie</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/signup}">Dodawanie użytkownika</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}" style="">Wyloguj</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container" style="margin-top: 200px;">
+
+    <div class="row">
+        <div class="col-sm-8">
+            <img class="img-fluid" th:src="@{/img/photo.png}">
+        </div>
+        <div class="col-sm-3">
+            <h6 style="font-size: 22px; font-weight: bold; text-align: center; padding: 25px; border: 1px solid #ced4da;"><span th:text="${advertisement.price}"></span> zł</h6>
+        </div>
+    </div>
+
+    <div class="col-sm-8">
+        <div class="table-responsive-md">
+            <table class="table">
+                <thead>
+
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>Marka: </strong><span th:text="${advertisement.brand}"></span></td>
+                    <td><strong>Rok produkcji: </strong><span th:text="${advertisement.year}"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Model: </strong><span th:text="${advertisement.model}"></span></td>
+                    <td><strong>Paliwo: </strong><span th:text="${advertisement.fuel}"></span></td>
+
+                </tr>
+                <tr>
+                    <td><strong>Moc: </strong><span th:text="${advertisement.power}"></span>km</td>
+                    <td><strong>Pojemność: </strong><span th:text="${advertisement.liters}"></span>cm<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td><strong>Przebieg: </strong><span th:text="${advertisement.mileage}"></span>km</td>
+                    <td><strong>Skrzynia: </strong><span th:text="${advertisement.gearbox}"></span></td>
+                </tr>
+                <tr>
+                    <td><span th:text="${advertisement.description}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

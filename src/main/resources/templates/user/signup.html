@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Dodawanie użytkownika</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+          id="bootstrap-css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-left" th:href="@{/dashboard}" title="Powrót do strony głównej">
+            <img itemprop="image" class="mobile" th:src="@{/img/m4chi.png}" alt="Motoryzacyjny portal ogłoszeniowy">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/advertisement/all}">Zarządzaj ogłoszeniami</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/advertisement/form}" style="">Dodaj ogłoszenie</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/signup}">Dodawanie użytkownika</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}" style="">Wyloguj</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="col-md-4 centered">
+    <form class="form-horizontal" role="form" method="POST" th:action="@{/signup}" th:object="${user}">
+        <div class="alert alert-success" role="alert" th:if="${msg}" th:utext="${msg}">Rejestracja przebiegła
+            pomyślnie.
+        </div>
+
+        <h2>Dodawanie użytkownika</h2>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="form-group">
+                    <input type="text" th:field="*{firstname}" class="form-control" id="firstname" placeholder="Imię"
+                           required autofocus/>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="form-group">
+                    <input type="text" th:field="*{lastname}" class="form-control" id="lastname" placeholder="Nazwisko"
+                           required autofocus/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="text" th:field="*{email}" class="form-control" id="email" placeholder="Email" required
+                   autofocus/>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="form-group">
+                    <input type="password" th:field="*{password}" class="form-control" id="password" placeholder="Hasło"
+                           required autofocus/>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="form-group">
+                    <input type="password" th:field="*{passwordTwo}" class="form-control" id="passwordTwo" placeholder="Potwierdź hasło"
+                           required autofocus/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <button type="submit" class="btn btn-lg btn-primary btn-block">Dodaj</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</body>
+</html>
