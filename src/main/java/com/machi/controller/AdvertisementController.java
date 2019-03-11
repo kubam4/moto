@@ -1,7 +1,6 @@
 package com.machi.controller;
 
 import com.machi.model.Advertisement;
-import com.machi.model.User;
 import com.machi.service.AdvertisementService;
 import com.machi.service.UserService;
 import com.machi.uc.AdvertisementDto;
@@ -11,15 +10,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.util.List;
 
 
@@ -93,9 +89,24 @@ public class AdvertisementController {
 
     // CRUD END
 
-    @PostMapping("/advertisement/form/save")
-    public ModelAndView save(@RequestParam("imageFile") MultipartFile imageFile, AdvertisementDto advertisementDto) {
+    @PostMapping(value = "/advertisement/form/save", consumes = {"multipart/form-data"})
+    public ModelAndView save(@RequestParam("imageFile") MultipartFile imageFile, @RequestBody AdvertisementDto advertisementDto, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView();
+        final long userId = (long) session.getAttribute("userId");
+        advertisementDto.setFileName(imageFile.getOriginalFilename());
+        // tutaj pwnienes ustawic sciezke do pliku
+        modelAndView.addObject("advertisementDto", advertisementDto);
+        advertisementDto.setUserId(userId);
+
+        try {
+            // pamietaj ze metoda saveImage ustawia sciezke do pliku, dlatego wazna jest kolejnosc
+            advertisementService.saveImage(imageFile, advertisementDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            modelAndView.setViewName("error");
+            return modelAndView;
+        }
+
         try {
             advertisementService.save(advertisementDto);
         } catch (Exception e) {
@@ -104,36 +115,9 @@ public class AdvertisementController {
             return modelAndView;
         }
 
-        AdvertisementDto advertisementDto1 = new AdvertisementDto();
-        advertisementDto.setFileName(imageFile.getOriginalFilename());
-        advertisementDto.setPath("/img");
         modelAndView.setViewName("success");
-        try {
-            advertisementService.saveImage(imageFile, advertisementDto);
-        } catch (Exception e) {
-            e.printStackTrace();
-            modelAndView.setViewName("error");
-            return modelAndView;
-        }
 
-        final long userId = (long) session.getAttribute("userId");
-        User user = userService.findById(userId);
-
-        advertisementDto.setUser(user);
-        modelAndView.addObject("advertisementDto", advertisementDto);
         return modelAndView;
-
-    /*public String save(@Valid Advertisement advertisement, BindingResult result, Model model, RedirectAttributes redirect, HttpSession session) {
-
-        final long userId = (long) session.getAttribute("userId");
-        User user = userService.findById(userId);
-
-        advertisement.setUser(user);
-
-        advertisementService.save(advertisement);
-
-        redirect.addFlashAttribute("success", "Twoje ogłoszenie zostało dodane poprawnie!");
-        return "redirect:/dashboard";*/
     }
 
     @GetMapping("/advertisement/{id}/upload")
@@ -164,16 +148,16 @@ public class AdvertisementController {
     public String uploadImage(@RequestParam("imageFile")MultipartFile imageFile) throws Exception {
         String returnValue="start";
 
-        advertisementDto advertisementDto = new AdvertisementDto();
-        advertisementDto.setFileName(imageFile.getOriginalFilename());
-        advertisementDto.setPath("/photo");
-
-        try {
-            advertisementService.saveImage(imageFile, advertisementDto);
-        } catch (Exception e) {
-            e.printStackTrace();
-            returnValue = "error";
-        }
+//        advertisementDto advertisementDto = new AdvertisementDto();
+//        advertisementDto.setFileName(imageFile.getOriginalFilename());
+//        advertisementDto.setPath("/photo");
+//
+//        try {
+//            advertisementService.saveImage(imageFile, advertisementDto);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            returnValue = "error";
+//        }
 
         return returnValue;
     }

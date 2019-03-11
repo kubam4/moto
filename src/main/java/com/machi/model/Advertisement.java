@@ -1,6 +1,7 @@
 package com.machi.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.machi.uc.AdvertisementDto;
 
 import javax.persistence.*;
 
@@ -52,6 +53,26 @@ public class Advertisement extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", updatable = false, nullable = false)
     private User user;
+
+    public Advertisement() {
+    }
+
+    // tylko do kopiowania nowoprzychodzących Dto, jak będzie update trzeba pamiętać aby skopiować tez id
+    public Advertisement(AdvertisementDto advertisementDto) {
+        // w przypadku tworzenia nowego obiektu nie posiada on id
+        this.brand = advertisementDto.getBrand();
+        this.model = advertisementDto.getModel();
+        this.mileage = advertisementDto.getMileage();
+        this.year = advertisementDto.getYear();
+        this.liters = advertisementDto.getLiters();
+        this.power = advertisementDto.getPower();
+        this.fuel = advertisementDto.getFuel();
+        this.price = advertisementDto.getPrice();
+        this.gearbox = advertisementDto.getGearbox();
+        this.description = advertisementDto.getDescription();
+        this.path = advertisementDto.getPath();
+        this.fileName = advertisementDto.getFileName();
+    }
 
     public Long getId() {
         return id;

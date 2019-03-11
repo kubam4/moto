@@ -14,7 +14,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     private final AdvertisementRepository advertisementRepository;
 
-    public AdvertisementServiceImpl(final AdvertisementRepository advertisementRepository) {
+    public AdvertisementServiceImpl(AdvertisementRepository advertisementRepository) {
         this.advertisementRepository = advertisementRepository;
     }
 
@@ -50,7 +50,9 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Advertisement save(AdvertisementDto advertisement) {
+    public Advertisement save(AdvertisementDto advertisementDto) {
+        Advertisement advertisement = new Advertisement(advertisementDto);
+
         return advertisementRepository.save(advertisement);
     }
 
@@ -79,8 +81,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public void saveImage(MultipartFile imageFile, AdvertisementDto advertisementDto) throws Exception {
-        advertisementDao.savePhotoImage(advertisementDto, imageFile);
-        advertisementDao.save(advertisementDto);
+
+        advertisementRepository.savePhotoImage(advertisementDto, imageFile);
     }
 
 }

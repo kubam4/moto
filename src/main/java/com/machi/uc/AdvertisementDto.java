@@ -20,12 +20,14 @@ public class AdvertisementDto {
     private String shortDescription;
     private String path;
     private String fileName;
+    private long userId;
 
     public AdvertisementDto() {
     }
 
 
     public AdvertisementDto(final Advertisement advertisement) {
+
         this.id = advertisement.getId();
         this.brand = advertisement.getBrand();
         this.model = advertisement.getModel();
@@ -190,5 +192,13 @@ public class AdvertisementDto {
                 ", path='" + path + '\'' +
                 ", fileName='" + fileName + '\'' +
                 '}';
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public long getUserId() {
+        return userId;
     }
 }
