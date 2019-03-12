@@ -37,5 +37,4 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
         Files.write(path, bytes);
     }
 
-    //List<Advertisement> findByUser_IdContaining();
 }

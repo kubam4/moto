@@ -38,6 +38,12 @@ public class AdvertisementController {
         return "advertisement/all";
     }
 
+    @RequestMapping("/home")
+    public String allListAdvertisements(Model model) {
+        model.addAttribute("advertisements", getAdvertisementsUC.getAdvertisements());
+        return "home";
+    }
+
     @GetMapping("/advertisement/form")
     public String add(Model model) {
         model.addAttribute("advertisement", new Advertisement());
@@ -63,6 +69,13 @@ public class AdvertisementController {
     @PatchMapping(value = "/advertisements", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public List<Advertisement> readAllAdvertisement() {
+        return advertisementService.findAll();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping(value = "/home", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public List<Advertisement> readAllListAdvertisement() {
         return advertisementService.findAll();
     }
 
