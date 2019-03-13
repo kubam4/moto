@@ -102,17 +102,16 @@ public class AdvertisementController {
 
     // CRUD END
 
-    @PostMapping(value = "/advertisement/form/save", consumes = {"multipart/form-data"})
-    public ModelAndView save(@RequestParam("imageFile") MultipartFile imageFile, @RequestBody AdvertisementDto advertisementDto, HttpSession session) {
+    @PostMapping(value = "/advertisement/form/save")
+    public ModelAndView save(@RequestParam("imageFile") MultipartFile imageFile, @ModelAttribute AdvertisementDto advertisementDto, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView();
         final long userId = (long) session.getAttribute("userId");
         advertisementDto.setFileName(imageFile.getOriginalFilename());
-        // tutaj pwnienes ustawic sciezke do pliku
+
         modelAndView.addObject("advertisementDto", advertisementDto);
         advertisementDto.setUserId(userId);
 
         try {
-            // pamietaj ze metoda saveImage ustawia sciezke do pliku, dlatego wazna jest kolejnosc
             advertisementService.saveImage(imageFile, advertisementDto);
         } catch (Exception e) {
             e.printStackTrace();
