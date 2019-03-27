@@ -46,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/login", "/css/**", "/img/**", "/js/**", "/advertisement/all", "/dashboard", "/home").permitAll()
                .anyRequest().authenticated()
-                 //.anyRequest().permitAll()
+//                 .anyRequest().permitAll()
                 .and()
                 .csrf().disable()
                 .formLogin()
@@ -59,10 +59,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login")
-                .and()
-                .rememberMe()
-                .tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(60 * 60)
                 .and()
                 .exceptionHandling().accessDeniedPage("/access_denied");
 

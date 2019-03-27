@@ -104,32 +104,19 @@ public class AdvertisementController {
 
     @PostMapping(value = "/advertisement/form/save")
     public ModelAndView save(@RequestParam("imageFile") MultipartFile imageFile, @ModelAttribute AdvertisementDto advertisementDto, HttpSession session) {
-        ModelAndView modelAndView = new ModelAndView();
         final long userId = (long) session.getAttribute("userId");
         advertisementDto.setFileName(imageFile.getOriginalFilename());
-
-        modelAndView.addObject("advertisementDto", advertisementDto);
         advertisementDto.setUserId(userId);
 
         try {
             advertisementService.saveImage(imageFile, advertisementDto);
-        } catch (Exception e) {
-            e.printStackTrace();
-            modelAndView.setViewName("error");
-            return modelAndView;
-        }
-
-        try {
             advertisementService.save(advertisementDto);
         } catch (Exception e) {
             e.printStackTrace();
-            modelAndView.setViewName("error");
-            return modelAndView;
+            return new ModelAndView("error");
         }
 
-        modelAndView.setViewName("success");
-
-        return modelAndView;
+        return new ModelAndView("redirect:/dashboard");
     }
 
     @GetMapping("/advertisement/{id}/upload")

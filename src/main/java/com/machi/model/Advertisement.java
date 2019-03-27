@@ -58,7 +58,7 @@ public class Advertisement extends BaseEntity {
     }
 
     // tylko do kopiowania nowoprzychodzących Dto, jak będzie update trzeba pamiętać aby skopiować tez id
-    public Advertisement(AdvertisementDto advertisementDto) {
+    public Advertisement(AdvertisementDto advertisementDto, final User user) {
         // w przypadku tworzenia nowego obiektu nie posiada on id
         this.brand = advertisementDto.getBrand();
         this.model = advertisementDto.getModel();
@@ -72,6 +72,7 @@ public class Advertisement extends BaseEntity {
         this.description = advertisementDto.getDescription();
         this.path = advertisementDto.getPath();
         this.fileName = advertisementDto.getFileName();
+        this.user = user;
     }
 
     public Long getId() {

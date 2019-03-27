@@ -29,6 +29,11 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
         Path currentPath = Paths.get("."); // kropka oznacza current folder
         Path absolutePath = currentPath.toAbsolutePath();
         String imageFolderAbsolutePath = absolutePath + "/src/main/resources/static/img/";
+
+        //
+        String imagesDirecotry = "pobrane z propertisa";
+        String twojaSuperSciezkaDoPliczku = imagesDirecotry + "/" + advertisementDto.getId() + "/" +  imageFile.getOriginalFilename();
+
         // zmienna path tak naprawde zawiera kompletna sciezke do zdjecia
         advertisementDto.setPath(imageFolderAbsolutePath + imageFile.getOriginalFilename());
 

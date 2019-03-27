@@ -1,6 +1,7 @@
 package com.machi.service;
 
 import com.machi.model.Advertisement;
+import com.machi.model.User;
 import com.machi.repository.AdvertisementRepository;
 import com.machi.uc.AdvertisementDto;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,11 @@ import java.util.List;
 public class AdvertisementServiceImpl implements AdvertisementService {
 
     private final AdvertisementRepository advertisementRepository;
+    private final UserService userService;
 
-    public AdvertisementServiceImpl(AdvertisementRepository advertisementRepository) {
+    public AdvertisementServiceImpl(AdvertisementRepository advertisementRepository, final UserService userService) {
         this.advertisementRepository = advertisementRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -51,7 +54,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Advertisement save(AdvertisementDto advertisementDto) {
-        Advertisement advertisement = new Advertisement(advertisementDto);
+        final User user = userService.findById(advertisementDto.getUserId());
+        Advertisement advertisement = new Advertisement(advertisementDto, user);
 
         return advertisementRepository.save(advertisement);
     }
